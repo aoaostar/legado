@@ -1,0 +1,54 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+
+  build:
+    strategy:
+      matrix:
+        platform: [ ubuntu-latest ]
+        python-version: [ 3.x ]
+    name: Build
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Get dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install gcc-mingw-w64-x86-64
+
+      - name: Set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run script
+        run: |
+          python main.py
+          sudo python rm.py
+
+      - name: Commit files
+        run: |
+          sudo git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          sudo git config --local user.name "github-actions[bot]"
+          sudo git add .
+          sudo git commit -a -m "Add sync changes"
+          sudo git checkout -B release
+          sudo git push -uf origin release

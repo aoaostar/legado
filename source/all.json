@@ -1,0 +1,14 @@
+{
+  "title": "全量书源",
+  "type": "bookSource",
+  "items": [
+    {
+      "title": "全量书源",
+      "type": "local",
+      "url": "all.json",
+      "tag": [
+        "推荐"
+      ]
+    }
+  ]
+}

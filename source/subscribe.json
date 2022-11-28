@@ -1,0 +1,14 @@
+{
+  "title": "订阅源",
+  "type": "rssSource",
+  "items": [
+    {
+      "title": "aoaostar订阅源",
+      "type": "local",
+      "url": "aoaostar.json",
+      "tag": [
+        "推荐"
+      ]
+    }
+  ]
+}
