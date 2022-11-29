@@ -5,12 +5,14 @@
 # | Author: Pluto <i@aoaostar.com>
 # +-------------------------------------------------------------------
 import asyncio
+from asyncio import Task
+from typing import Any
 
 from common import config
 
 
 async def wait(tasks):
-    arr = []
+    arr: list[Task[Any]] = []
 
     semaphore = config.asyncio['semaphore']
     if semaphore is not None:
@@ -24,7 +26,6 @@ async def wait(tasks):
         arr.append(asyncio.create_task(with_sleep(task)))
 
     return await asyncio.wait(arr)
-
 
 
 async def gather(tasks):
@@ -48,7 +49,8 @@ def run(func):
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
 
-    loop.run_until_complete(func)
+    return loop.run_until_complete(func)
+
 
 async def with_semaphore(semaphore, func):
     async with semaphore:

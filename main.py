@@ -7,8 +7,10 @@
 import asyncio
 import json
 import os.path
+import time
 
 from common import fetch, hash_util, async_util
+from common.check_book import check_book
 from common.date_format import date_format
 from common.file import save_str, read_str
 from common.json_util import load_json
@@ -30,6 +32,26 @@ def log(message, type_='info'):
     print(f"[{type_.upper()}]{message}")
 
 
+def calculate_time(name=''):
+    if name is not None:
+        name += ': '
+
+    def decorator(fn):
+        if asyncio.iscoroutinefunction(fn):
+            async def func(*args, **kwargs):
+                start_time = time.time()
+                await fn(*args, **kwargs)
+                log(f"{name}耗时: {time.time() - start_time}s")
+        else:
+            def func(*args, **kwargs):
+                start_time = time.time()
+                fn(*args, **kwargs)
+                log(f"{name}耗时: {time.time() - start_time}s")
+        return func
+
+    return decorator
+
+
 def load_modify_time_dict():
     data = load_json(DATA_PATH)
     result = {}
@@ -48,7 +70,7 @@ async def process_source(item, key):
     else:
         url = item['url']
 
-    cache_filename = os.path.normpath(f"{CACHE_PATH}/{hash_util.sha1(url)}.json")
+    cache_filename = os.path.normpath(f"{CACHE_PATH}/{hash_util.sha1(url)}.json").replace('\\', '/')
 
     def log_(message, type_='info'):
         log(f"[{item['title']}] {message} {url}", type_)
@@ -90,10 +112,11 @@ async def process_source(item, key):
         if '同步失败' in item['status']:
             log_(item['status'], 'error')
         else:
-            log_(item['status'])
+            log_(f"{item['status']} 共 {len(json.loads(dumps))} 条")
         return item
 
 
+@calculate_time(name='同步书源')
 async def sync(listdir_source: list[str], update: bool = False):
     data = []
     statuses = []
@@ -117,7 +140,7 @@ async def sync(listdir_source: list[str], update: bool = False):
     if update:
         data.extend(load_json(DATA_PATH))
 
-    save_str(filename="./data.json", data=json.dumps(data, ensure_ascii=False, indent=4))
+    save_str(filename=DATA_PATH, data=json.dumps(data, ensure_ascii=False, indent=4))
 
     error_count = 0
     for status in statuses:
@@ -127,7 +150,9 @@ async def sync(listdir_source: list[str], update: bool = False):
     log(f'同步成功, 共计 {len(statuses)} 条记录, 同步成功: {len(statuses) - error_count} 条, 同步失败: {error_count} 条')
 
 
-def render_readme(data: dict):
+@calculate_time(name='渲然页面')
+def render(data_path: str):
+    data = load_json(data_path)
     nav = '''
 ## 目录
     '''
@@ -150,7 +175,7 @@ def render_readme(data: dict):
             for i in range(len(v['items'])):
                 item = v['items'][i]
                 title = item['title']
-                url = config['repo_url'] + item['filename'].replace('\\', '/')
+                url = config['repo_url'] + item['filename']
                 if 'tag' in item:
                     for tag in item['tag']:
                         title += f" {tag}"
@@ -199,7 +224,9 @@ def render_readme(data: dict):
     log('输出[README.md、index.html]成功')
 
 
-def all_in_one(data):
+@calculate_time(name='渲然页面')
+def all_in_one(data_path):
+    data = load_json(data_path)
     all_ = {}
     for i in range(len(data)):
         d = data[i]
@@ -213,17 +240,45 @@ def all_in_one(data):
     save_str(STORAGE_PATH + '/all/all.json', json.dumps(list(all_)))
 
 
-if __name__ == '__main__':
+@calculate_time(name="去除无效书源")
+async def remove_invalid_book_source(data_path):
+    data = load_json(data_path)
+    for source in data:
+        if source['type'] == 'bookSource':
+            for item in source['items']:
+                rules = load_json(item['filename'])
+                ok_rules = []
+                tasks = []
+
+                async def check(rule_):
+                    status, hostname, message = await check_book(rule_)
+
+                    log(f"{source['title']} {item['title']} {rule_['bookSourceName']} [{hostname}] {status} {message}")
+                    if status:
+                        ok_rules.append(rule_)
+
+                for rule in rules:
+                    tasks.append(asyncio.create_task(check(rule)))
+                await async_util.wait(tasks)
+                log(f"{source['title']} {item['title']} 总书源: {len(rules)} 无效书源: {len(rules) - len(ok_rules)}")
+                save_str(item['filename'], json.dumps(ok_rules))
+
+
+@calculate_time(name="总任务")
+def main():
     listdir = os.listdir(SOURCE_PATH)
     listdir.remove('all.json')
 
     async_util.run(sync(listdir))
 
-    data = load_json(DATA_PATH)
+    # 去除无效书源
+    async_util.run(remove_invalid_book_source(DATA_PATH))
 
-    all_in_one(data)
+    all_in_one(DATA_PATH)
     async_util.run(sync(['all.json'], True))
 
-    data = load_json(DATA_PATH)
+    render(DATA_PATH)
 
-    render_readme(data)
+
+if __name__ == '__main__':
+    main()
