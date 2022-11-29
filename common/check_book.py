@@ -19,12 +19,12 @@ async def check_book(book_rule: dict):
             hostname = urlparse2.hostname
             port = urlparse2.port
     if hostname is None:
-        return True, hostname, '无法获取到hostname'
+        return True, '无法获取到hostname'
     try:
         ping = await async_tcp_ping(host=hostname, port=port or 80, timeout=10)
-        return True, hostname, '%.f ms' % ping
+        return True, f'{hostname} %.f ms' % ping
     except Exception as e:
-        return False, hostname, e
+        return False, f"{hostname} {e}"
 
 
 async def async_tcp_ping(host, port, timeout=10):

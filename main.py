@@ -7,7 +7,6 @@
 import asyncio
 import json
 import os.path
-import sys
 import time
 
 from common import fetch, hash_util, async_util
@@ -265,9 +264,9 @@ async def remove_invalid_book_source(data_path):
                 tasks = []
 
                 async def check(rule_):
-                    status, hostname, message = await check_book(rule_)
+                    status, message = await check_book(rule_)
 
-                    log(f"{source['title']} {item['title']} {rule_['bookSourceName']} [{hostname}] {status} {message}")
+                    log(f"{source['title']} {item['title']} {rule_['bookSourceName']} {status} {message}")
                     if status:
                         ok_rules.append(rule_)
 
