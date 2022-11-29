@@ -31,17 +31,17 @@
     + [访问直链](https://legado.aoaostar.com/cache%5C8274870a1493d7c4e51c41682a8d1e9500457826.json)
     + [一键导入](legado://import/bookSource?src=https://legado.aoaostar.com/cache%5C8274870a1493d7c4e51c41682a8d1e9500457826.json)
     + 上一次同步状态: 同步成功
-    + 更新时间: 2022-11-28 19:59:45
-    + 同步时间: 2022-11-28 22:58:59
+    + 更新时间: 2022-11-29 10:38:49
+    + 同步时间: 2022-11-29 10:38:49
 
 <h2 id="书源_book">书源[book]</h2>
             
 * XIU2精品书源 推荐
     + [访问直链](https://legado.aoaostar.com/cache%5C71e56d4f1d8f1bff61fdd3582ef7513600a9e108.json)
     + [一键导入](legado://import/bookSource?src=https://legado.aoaostar.com/cache%5C71e56d4f1d8f1bff61fdd3582ef7513600a9e108.json)
-    + 上一次同步状态: 同步失败: 
-    + 更新时间: 2022-11-28 19:43:32
-    + 同步时间: 2022-11-28 22:58:59
+    + 上一次同步状态: 同步成功
+    + 更新时间: 2022-11-29 10:26:02
+    + 同步时间: 2022-11-29 10:38:49
 
 ****
 
@@ -49,8 +49,8 @@
     + [访问直链](https://legado.aoaostar.com/cache%5C6c35d84798ddbf4aad3fe3f0fd6cec53dd788be8.json)
     + [一键导入](legado://import/bookSource?src=https://legado.aoaostar.com/cache%5C6c35d84798ddbf4aad3fe3f0fd6cec53dd788be8.json)
     + 上一次同步状态: 同步成功
-    + 更新时间: 2022-11-28 20:36:05
-    + 同步时间: 2022-11-28 22:58:59
+    + 更新时间: 2022-11-29 10:26:02
+    + 同步时间: 2022-11-29 10:38:49
 
 ****
 
@@ -58,8 +58,8 @@
     + [访问直链](https://legado.aoaostar.com/cache%5C636dcfbb00cf823c7832c0e5b15d4daa3968de46.json)
     + [一键导入](legado://import/bookSource?src=https://legado.aoaostar.com/cache%5C636dcfbb00cf823c7832c0e5b15d4daa3968de46.json)
     + 上一次同步状态: 同步成功
-    + 更新时间: 2022-11-28 20:36:06
-    + 同步时间: 2022-11-28 22:58:59
+    + 更新时间: 2022-11-29 10:26:02
+    + 同步时间: 2022-11-29 10:38:49
 
 ****
 
@@ -67,8 +67,8 @@
     + [访问直链](https://legado.aoaostar.com/cache%5C7662c777995ab5372ac7dc9720910405b73be4cd.json)
     + [一键导入](legado://import/bookSource?src=https://legado.aoaostar.com/cache%5C7662c777995ab5372ac7dc9720910405b73be4cd.json)
     + 上一次同步状态: 同步成功
-    + 更新时间: 2022-11-28 20:36:05
-    + 同步时间: 2022-11-28 22:58:59
+    + 更新时间: 2022-11-29 10:26:02
+    + 同步时间: 2022-11-29 10:38:49
 
 ****
 
@@ -76,8 +76,8 @@
     + [访问直链](https://legado.aoaostar.com/cache%5C70ce30e7763254709101fa48516dd7b1df3392db.json)
     + [一键导入](legado://import/bookSource?src=https://legado.aoaostar.com/cache%5C70ce30e7763254709101fa48516dd7b1df3392db.json)
     + 上一次同步状态: 同步成功
-    + 更新时间: 2022-11-28 20:36:07
-    + 同步时间: 2022-11-28 22:58:59
+    + 更新时间: 2022-11-29 10:26:02
+    + 同步时间: 2022-11-29 10:38:49
 
 ****
 
@@ -85,8 +85,8 @@
     + [访问直链](https://legado.aoaostar.com/cache%5Cfc28a47b1f7708cec14b586981f4be76e30d20c8.json)
     + [一键导入](legado://import/bookSource?src=https://legado.aoaostar.com/cache%5Cfc28a47b1f7708cec14b586981f4be76e30d20c8.json)
     + 上一次同步状态: 同步成功
-    + 更新时间: 2022-11-28 20:36:05
-    + 同步时间: 2022-11-28 22:58:59
+    + 更新时间: 2022-11-29 10:26:02
+    + 同步时间: 2022-11-29 10:38:49
 
 ****
 
@@ -94,8 +94,8 @@
     + [访问直链](https://legado.aoaostar.com/cache%5Cd7fb261c0dc2b4622845f67e8a5f3c805fd64b64.json)
     + [一键导入](legado://import/bookSource?src=https://legado.aoaostar.com/cache%5Cd7fb261c0dc2b4622845f67e8a5f3c805fd64b64.json)
     + 上一次同步状态: 同步成功
-    + 更新时间: 2022-11-28 20:36:05
-    + 同步时间: 2022-11-28 22:58:59
+    + 更新时间: 2022-11-29 10:26:02
+    + 同步时间: 2022-11-29 10:38:49
 
 ****
 
@@ -103,8 +103,8 @@
     + [访问直链](https://legado.aoaostar.com/cache%5C681453f11a1d44b332b52155b7818f762009e137.json)
     + [一键导入](legado://import/bookSource?src=https://legado.aoaostar.com/cache%5C681453f11a1d44b332b52155b7818f762009e137.json)
     + 上一次同步状态: 同步成功
-    + 更新时间: 2022-11-28 20:36:05
-    + 同步时间: 2022-11-28 22:58:59
+    + 更新时间: 2022-11-29 10:26:02
+    + 同步时间: 2022-11-29 10:38:49
 
 <h2 id="订阅源_subscribe">订阅源[subscribe]</h2>
             
@@ -112,8 +112,8 @@
     + [访问直链](https://legado.aoaostar.com/cache%5C63d0b3cc07cad9caf599b192007b26a858a57758.json)
     + [一键导入](legado://import/rssSource?src=https://legado.aoaostar.com/cache%5C63d0b3cc07cad9caf599b192007b26a858a57758.json)
     + 上一次同步状态: 同步成功
-    + 更新时间: 2022-11-28 21:12:54
-    + 同步时间: 2022-11-28 22:58:59
+    + 更新时间: 2022-11-29 10:26:02
+    + 同步时间: 2022-11-29 10:38:49
 
 ****
 

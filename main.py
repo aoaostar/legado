@@ -32,6 +32,17 @@ def log(message, type_='info'):
     print(f"[{type_.upper()}]{message}")
 
 
+def load_modify_time_dict():
+    data = load_json(DATA_PATH)
+    result = {}
+    for d in data:
+        if 'items' in d:
+            for v in d['items']:
+                result[v['sha1']] = v['modify_time']
+
+    return result
+
+
 async def process_source(item, key):
     if 'type' in item and item['type'] == 'local':
         url = f"{STORAGE_PATH}/{key}/{item['url']}"
@@ -49,7 +60,10 @@ async def process_source(item, key):
     cache_sha1 = ''
     if os.path.exists(cache_filename):
         cache_sha1 = hash_util.sha1(read_str(cache_filename))
-
+        modify_time_dict = load_modify_time_dict()
+        if cache_sha1 in modify_time_dict:
+            item['modify_time'] = modify_time_dict[cache_sha1]
+            modify_time_dict.clear()
     try:
         if 'type' in item and item['type'] == 'local':
             dumps = read_str(f"{url}")
@@ -71,10 +85,10 @@ async def process_source(item, key):
         item['filename'] = cache_filename
         item['sha1'] = cache_sha1
         item['update_time'] = now
-        if os.path.exists(cache_filename):
-            item['modify_time'] = date_format(int(os.path.getmtime(cache_filename)))
-        else:
+
+        if 'modify_time' not in item:
             item['modify_time'] = now
+
         if '同步失败' in item['status']:
             log_(item['status'], 'error')
         else:
@@ -192,9 +206,7 @@ def all_in_one(data):
             for d_ in d['items']:
                 d_json = load_json(d_['filename'])
                 for d_item in d_json:
-
                     all_[hash_util.sha1(str(d_item))] = d_item
-
 
     all_ = all_.values()
     save_str(STORAGE_PATH + '/all/all.json', json.dumps(list(all_)))
