@@ -13,6 +13,6 @@
 
 **「阅读」APP**不同于其他小说阅读软件，其原理为：**解析小说网站的搜索页、详情页、目录页、正文页，提取相关信息**来显示给你看，因此安装后还需要**自行寻找并导入书源**才能使用，该项目就是为了把我收集的书源分享出来~  
 
-> 阅读 APP [官方下载地址](https://github.com/gedoor/legado/releases)、[酷安下载地址](https://www.coolapk.com/apk/256030)
+> 阅读 APP [官方下载地址](https://github.com/gedoor/legado/releases)、[酷安下载地址[推荐]](https://www.coolapk.com/apk/256030)
 
 ****

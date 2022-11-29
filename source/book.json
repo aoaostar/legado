@@ -6,57 +6,43 @@
       "title": "XIU2精品书源",
       "url": "https://github.com/XIU2/Yuedu/raw/master/shuyuan",
       "tag": [
-        "推荐"
+        "\uD83D\uDD25"
       ]
     },
     {
       "title": "namofree的书源",
       "url": "http://52bsj.vip:81/api/v3/file/get/13863/bookSource.json?sign=J2oDHYHAww44kFHrDK4YywuLV1RXSSJRtGkhILA_P7c%3D%3A0",
-      "tag": [
-        "推荐"
-      ]
+      "tag": []
     },
     {
       "title": "一程的书源合集",
       "url": "https://www.gitlink.org.cn/api/yi-c/yd/raw?filepath=sy.json",
-      "tag": [
-        "推荐"
-      ]
+      "tag": []
     },
     {
       "title": "风停在了窗边",
       "url": "https://www.gitlink.org.cn/api/fcdlcb/ydsy/raw?filepath=bookSource.json",
-      "tag": [
-        "推荐"
-      ]
+      "tag": []
     },
     {
       "title": "破冰书源",
       "url": "https://raw.staticdn.net/PB-pobing/pobing/pb/50.json",
-      "tag": [
-        "推荐"
-      ]
+      "tag": []
     },
     {
       "title": "破冰有声书源",
       "url": "https://shuyuan.mgz6.cc/rss/0222yousheng.txt",
-      "tag": [
-        "推荐"
-      ]
+      "tag": []
     },
     {
       "title": "黄凡凡书源（酷安：梧桐半死清霜后）",
       "url": "https://vkceyugu.cdn.bspapp.com/VKCEYUGU-b73a39ae-698e-4b0b-bf52-4ec3a089662a/872c43fa-9903-4f13-8d5a-d65c6af6ef8d.txt",
-      "tag": [
-        "推荐"
-      ]
+      "tag": []
     },
     {
       "title": "不世玄奇搜索引擎书源",
       "url": "https://shuyuan.mgz6.cc/rss/ssyq.json",
-      "tag": [
-        "推荐"
-      ]
+      "tag": []
     }
   ]
 }

@@ -3,6 +3,10 @@
   "source": [
     "all",
     "book",
-    "subscribe"
+    "subscribe",
+    "theme",
+    "readConfig",
+    "replaceRule",
+    "httpTTS"
   ]
 }

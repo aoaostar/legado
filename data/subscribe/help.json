@@ -9,10 +9,10 @@
     "ruleLink": "a@href",
     "ruleTitle": "a@textNodes",
     "singleUrl": true,
-    "sortUrl": "首页::https://legado.aoaostar.com",
+    "sortUrl": "首页::https://www.yuque.com/legado/wiki",
     "sourceGroup": "书源",
-    "sourceIcon": "https://www.aoaostar.com/favicon.ico",
-    "sourceName": "阅读APP源 - AOAOSTAR",
-    "sourceUrl": "https://legado.aoaostar.com"
+    "sourceIcon": "https://www.yuque.com/favicon.ico",
+    "sourceName": "阅读APP使用文档",
+    "sourceUrl": "https://www.yuque.com/legado/wiki"
   }
 ]

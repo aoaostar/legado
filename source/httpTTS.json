@@ -1,0 +1,46 @@
+{
+  "title": "在线朗读引擎",
+  "type": "httpTTS",
+  "items": [
+    {
+      "title": "月下自酌听书TTS合集",
+      "type": "local",
+      "url": "yxzz.json",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
+    },
+    {
+      "title": "暗香听书TTS合集",
+      "type": "local",
+      "url": "axts.json",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
+    },
+    {
+      "title": "千仞云听书TTS合集",
+      "type": "local",
+      "url": "qry.json",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
+    },
+    {
+      "title": "酷安@墨迹染流年分享的姬鲁听书TTS合集",
+      "type": "local",
+      "url": "mjrln.json",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
+    },
+    {
+      "title": "酷安@纵横不败大佬TTS听书源更新",
+      "type": "local",
+      "url": "yxzz.json",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
+    }
+  ]
+}

@@ -7,8 +7,6 @@
 import asyncio
 import json
 import os.path
-import sys
-import urllib.parse
 
 from common import fetch, hash_util, async_util
 from common.date_format import date_format
@@ -146,11 +144,13 @@ def render_readme(data: dict):
             '''
             content += f'''
 <h2 id="{v['title']}_{k}">{v['title']}[{k}]</h2>
+<details>
+<summary>点击展开</summary>
             '''
             for i in range(len(v['items'])):
                 item = v['items'][i]
                 title = item['title']
-                url = config['repo_url'] + urllib.parse.quote(item['filename'])
+                url = config['repo_url'] + item['filename'].replace('\\', '/')
                 if 'tag' in item:
                     for tag in item['tag']:
                         title += f" {tag}"
@@ -167,6 +167,7 @@ def render_readme(data: dict):
 '''
                 if i + 1 < len(v['items']):
                     content += '\n****\n'
+            content += '\n</details>\n'
 
     header = read_str('header.md')
     footer = read_str('footer.md')

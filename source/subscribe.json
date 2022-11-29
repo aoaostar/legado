@@ -3,11 +3,19 @@
   "type": "rssSource",
   "items": [
     {
-      "title": "aoaostar订阅源",
+      "title": "阅读APP源 - AOAOSTAR",
       "type": "local",
       "url": "aoaostar.json",
       "tag": [
-        "推荐"
+        "\uD83D\uDD25"
+      ]
+    },
+    {
+      "title": "阅读APP使用文档",
+      "type": "local",
+      "url": "help.json",
+      "tag": [
+        "\uD83D\uDD25"
       ]
     }
   ]
