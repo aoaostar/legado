@@ -31,3 +31,4 @@ def read_str(filename,  encoding='utf-8'):
 
     with open(filename, 'r', encoding=encoding) as f:
         return f.read()
+

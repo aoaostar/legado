@@ -7,6 +7,7 @@
 import asyncio
 import json
 import os.path
+import sys
 import time
 
 from common import fetch, hash_util, async_util
@@ -63,14 +64,24 @@ def load_modify_time_dict():
     return result
 
 
+def save_read_config(filename, data):
+    import zipfile
+    with zipfile.ZipFile(filename, "w") as f:
+        f.writestr('readConfig.json', data)
+
+
 async def process_source(item, key):
     if 'type' in item and item['type'] == 'local':
         url = f"{STORAGE_PATH}/{key}/{item['url']}"
-        item['url'] = config['repo_url'] + url
+        item['url'] = config['repo_url'] + os.path.normpath(url).replace('\\', '/')
     else:
         url = item['url']
 
-    cache_filename = os.path.normpath(f"{CACHE_PATH}/{hash_util.sha1(url)}.json").replace('\\', '/')
+    cache_filename = os.path.normpath(f"{CACHE_PATH}/{hash_util.sha1(url)}").replace('\\', '/')
+    if key == 'readConfig':
+        cache_filename += '.zip'
+    else:
+        cache_filename += '.json'
 
     def log_(message, type_='info'):
         log(f"[{item['title']}] {message} {url}", type_)
@@ -97,7 +108,10 @@ async def process_source(item, key):
             return
 
         cache_sha1 = hash_sha1
-        save_str(filename=cache_filename, data=dumps)
+        if key == 'readConfig':
+            save_read_config(cache_filename, dumps)
+        else:
+            save_str(filename=cache_filename, data=dumps)
     except Exception as e:
         item['status'] = '同步失败: ' + e.__str__()
         log_(e.__str__(), 'error')
