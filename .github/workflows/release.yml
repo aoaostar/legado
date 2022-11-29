@@ -1,11 +1,9 @@
-name: build
+name: release
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
 
@@ -20,7 +18,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         with:
-          ref: main
+          ref: release
 
       - name: Get dependencies
         run: |
@@ -48,5 +46,5 @@ jobs:
           sudo git config --local user.name "github-actions[bot]"
           sudo git add .
           sudo git commit -a -m "Add sync changes"
-          sudo git checkout -B release
+          sudo git checkout release
           sudo git push -uf origin release
