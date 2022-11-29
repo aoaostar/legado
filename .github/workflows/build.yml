@@ -40,7 +40,7 @@ jobs:
       - name: Run script
         run: |
           python main.py
-          sudo rm -rf .gitignore
+          sudo echo "__pycache__" > .gitignore
 
       - name: Commit files
         run: |
