@@ -42,7 +42,7 @@ jobs:
       - name: Run script
         run: |
           python main.py
-          sudo python rm.py
+          sudo rm -rf .gitignore
 
       - name: Commit files
         run: |
