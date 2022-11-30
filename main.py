@@ -285,7 +285,7 @@ def main():
     async_util.run(sync(listdir))
 
     # 去除无效书源
-    # async_util.run(remove_invalid_book_source(DATA_PATH))
+    async_util.run(remove_invalid_book_source(DATA_PATH))
 
     all_in_one(DATA_PATH)
     async_util.run(sync(['all.json'], True))
