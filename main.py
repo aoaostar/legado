@@ -89,7 +89,7 @@ async def process_source(item, key):
     item['status'] = '同步失败'
     cache_sha1 = ''
     if os.path.exists(cache_filename):
-        cache_sha1 = hash_util.sha1(read_str(cache_filename))
+        cache_sha1 = hash_util.file_sha1(cache_filename)
         modify_time_dict = load_modify_time_dict()
         if cache_sha1 in modify_time_dict:
             item['modify_time'] = modify_time_dict[cache_sha1]
@@ -285,7 +285,7 @@ def main():
     async_util.run(sync(listdir))
 
     # 去除无效书源
-    async_util.run(remove_invalid_book_source(DATA_PATH))
+    # async_util.run(remove_invalid_book_source(DATA_PATH))
 
     all_in_one(DATA_PATH)
     async_util.run(sync(['all.json'], True))

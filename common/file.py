@@ -27,8 +27,7 @@ def save_str(filename, data, encoding='utf-8'):
         f.flush()
 
 
-def read_str(filename,  encoding='utf-8'):
-
+def read_str(filename, encoding='utf-8'):
     with open(filename, 'r', encoding=encoding) as f:
         return f.read()
 
