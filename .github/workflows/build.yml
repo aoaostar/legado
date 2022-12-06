@@ -47,6 +47,6 @@ jobs:
           sudo git config --local user.email "github-actions[bot]@users.noreply.github.com"
           sudo git config --local user.name "github-actions[bot]"
           sudo git add .
-          sudo git commit -a -m "Add sync changes"
+          sudo git commit -m "Add sync changes"
           sudo git checkout -B release
           sudo git push -uf origin release
