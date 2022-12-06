@@ -96,11 +96,13 @@ async def process_source(item, key):
             modify_time_dict.clear()
     try:
         if 'type' in item and item['type'] == 'local':
-            dumps = read_str(f"{url}")
+            r_text_ = read_str(f"{url}")
         else:
             async with fetch.get(url) as r:
-                r_json_ = json.loads(await r.text())
-                dumps = json.dumps(r_json_)
+                r_text_ = await r.text()
+
+        r_json_ = json.loads(r_text_)
+        dumps = json.dumps(r_json_)
         hash_sha1 = hash_util.sha1(dumps)
         item['status'] = '同步成功'
         if cache_sha1 == hash_sha1:
