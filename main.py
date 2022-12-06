@@ -100,7 +100,7 @@ async def process_source(item, key):
         else:
             async with fetch.get(url) as r:
                 r_json_ = json.loads(await r.text())
-                dumps = json.dumps(r_json_, ensure_ascii=False)
+                dumps = json.dumps(r_json_)
         hash_sha1 = hash_util.sha1(dumps)
         item['status'] = '同步成功'
         if cache_sha1 == hash_sha1:
@@ -153,7 +153,7 @@ async def sync(listdir_source: list[str], update: bool = False):
     if update:
         data.extend(load_json(DATA_PATH))
 
-    save_str(filename=DATA_PATH, data=json.dumps(data, ensure_ascii=False, indent=4))
+    save_str(filename=DATA_PATH, data=json.dumps(data))
 
     error_count = 0
     for status in statuses:
