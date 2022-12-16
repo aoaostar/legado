@@ -94,6 +94,7 @@ async def process_source(item, key):
         if cache_sha1 in modify_time_dict:
             item['modify_time'] = modify_time_dict[cache_sha1]
             modify_time_dict.clear()
+    dumps = {}
     try:
         if 'type' in item and item['type'] == 'local':
             r_text_ = read_str(f"{url}")
@@ -104,7 +105,10 @@ async def process_source(item, key):
         r_json_ = json.loads(r_text_)
         dumps = json.dumps(r_json_)
         hash_sha1 = hash_util.sha1(dumps)
-        item['status'] = '同步成功'
+        if type(r_json_) is list:
+            item['status'] = f'同步成功, 共 {len(r_json_)} 条'
+        else:
+            item['status'] = f'同步成功'
         if cache_sha1 == hash_sha1:
             return
 
@@ -127,7 +131,7 @@ async def process_source(item, key):
         if '同步失败' in item['status']:
             log_(item['status'], 'error')
         else:
-            log_(f"{item['status']} 共 {len(json.loads(dumps))} 条")
+            log_(f"{item['status']}")
         return item
 
 
@@ -239,20 +243,28 @@ def render(data_path: str):
     log('输出[README.md、index.html]成功')
 
 
-@calculate_time(name='渲然页面')
-def all_in_one(data_path):
+@calculate_time(name='合并书源')
+def all_in_one(data_path, dist_path):
     data = load_json(data_path)
-    all_ = {}
+    filename_list = []
     for i in range(len(data)):
         d = data[i]
         if d['type'] == 'bookSource':
             for d_ in d['items']:
-                d_json = load_json(d_['filename'])
-                for d_item in d_json:
-                    all_[hash_util.sha1(str(d_item))] = d_item
+                filename_list.append(d_['filename'])
 
-    all_ = all_.values()
-    save_str(STORAGE_PATH + '/all/all.json', json.dumps(list(all_)))
+    def merge_json(filename_list_, dist_path_):
+        all_ = {}
+        for filename in filename_list_:
+            d_json = load_json(filename)
+            for d_item in d_json:
+                all_[hash_util.sha1(str(d_item))] = d_item
+
+        all_ = all_.values()
+        save_str(dist_path_, json.dumps(list(all_)))
+
+    merge_json(filename_list, dist_path)
+    merge_json([x[:-len('.json')] + '_filter.json' for x in filename_list], dist_path[:-len('.json')] + '_filter.json')
 
 
 @calculate_time(name="去除无效书源")
@@ -273,23 +285,26 @@ async def remove_invalid_book_source(data_path):
                         ok_rules.append(rule_)
 
                 for rule in rules:
-                    tasks.append(asyncio.create_task(check(rule)))
+                    tasks.append(check(rule))
                 await async_util.wait(tasks)
                 log(f"{source['title']} {item['title']} 总书源: {len(rules)} 无效书源: {len(rules) - len(ok_rules)}")
-                save_str(item['filename'], json.dumps(ok_rules))
+                save_str(item['filename'][:-len('.json')] + '_filter.json', json.dumps(ok_rules))
 
 
 @calculate_time(name="总任务")
 def main():
     listdir = os.listdir(SOURCE_PATH)
-    listdir.remove('all.json')
+    if 'all.json' in listdir:
+        listdir.remove('all.json')
 
     async_util.run(sync(listdir))
 
     # 去除无效书源
     async_util.run(remove_invalid_book_source(DATA_PATH))
 
-    all_in_one(DATA_PATH)
+    # 合并书源
+    all_in_one(DATA_PATH, STORAGE_PATH + '/all/all.json')
+
     async_util.run(sync(['all.json'], True))
 
     render(DATA_PATH)

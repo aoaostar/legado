@@ -6,8 +6,7 @@
 # +-------------------------------------------------------------------
 import asyncio
 
-import aiohttp
-from aiohttp import ClientSession, ClientResponse
+from aiohttp import ClientSession, ClientResponse, ClientTimeout
 
 from common import config
 
@@ -19,7 +18,6 @@ class Request:
     def __init__(self, *args, **kwargs):
         self.client_session = ClientSession()
         self.retry_client = RetryClient(client_session=self.client_session)
-
         self.request = self.retry_client.request(*args, **kwargs)
 
     async def __aenter__(self) -> ClientResponse:
@@ -52,8 +50,8 @@ def request(method, url, params=None, headers=None, data=None):
         method, config.http['http_proxy'] + url,
         params=params, proxy=config.http['proxy'],
         headers={**config.http['headers'], **headers},
-        data=data,
-        timeout=aiohttp.ClientTimeout(total=config.http['timeout']))
+        data=data, verify_ssl=False,
+        timeout=ClientTimeout(total=config.http['timeout']))
 
 
 def post(url, data=None, headers=None):

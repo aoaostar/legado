@@ -2,6 +2,6 @@ cache
 data.json
 index.html
 .idea
-data/all/all.json
+data/all/*.json
 __pycache__
 README2.md

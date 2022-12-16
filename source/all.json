@@ -9,6 +9,14 @@
       "tag": [
         "\uD83D\uDD25"
       ]
+    },
+    {
+      "title": "全量书源 (服务端已校检)",
+      "type": "local",
+      "url": "all_filter.json",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
     }
   ]
 }

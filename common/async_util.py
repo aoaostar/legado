@@ -12,6 +12,8 @@ from common import config
 
 
 async def wait(tasks):
+    if len(tasks) <= 0:
+        return
     arr: list[Task[Any]] = []
 
     semaphore = config.asyncio['semaphore']
@@ -46,8 +48,10 @@ async def gather(tasks):
 
 
 def run(func):
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
+    loop = asyncio.get_event_loop()
+    if loop.is_closed():
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
 
     return loop.run_until_complete(func)
 
