@@ -6,6 +6,8 @@
 # +-------------------------------------------------------------------
 import urllib.parse
 
+import aiohttp
+
 from common import async_util
 
 
@@ -20,14 +22,19 @@ async def check_book_by_search(book_rule: dict):
     for keywords in ["我的", "系统", "老", "我", "的", "修", "在"]:
         try:
             compiledBookSource = compileBookSource(book_rule)
-            searchResult = await search(compiledBookSource, keywords)
+            searchResult, skip = await search(compiledBookSource, keywords)
+            if skip is not False:
+                return True, f"{skip}, 跳过"
             if len(searchResult) > 0:
                 return True, f"[{keywords}] 搜索结果数: {len(searchResult)}"
             else:
                 continue
+
+        except aiohttp.ClientConnectorError as e:
+            return False, "网址连接超时, " + e.__str__()
         except Exception as e:
             # raise e
-            return False, e.__str__()
+            return True, "校检失败, 跳过, " + e.__str__()
 
     return False, f"搜索结果数: {len(searchResult)}"
 

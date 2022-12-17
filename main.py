@@ -8,12 +8,17 @@ import asyncio
 import json
 import os.path
 import time
+from typing import Callable, Union, Coroutine
 
 from common import fetch, hash_util, async_util
 from common.check_book import check_book
 from common.date_format import date_format
 from common.file import save_str, read_str
 from common.json_util import load_json
+
+import warnings
+
+warnings.filterwarnings('ignore')
 
 SOURCE_PATH = './source'
 DATA_PATH = './data.json'
@@ -36,7 +41,7 @@ def calculate_time(name=''):
     if name is not None:
         name += ': '
 
-    def decorator(fn):
+    def decorator(fn) -> Union[Callable, Coroutine]:
         if asyncio.iscoroutinefunction(fn):
             async def func(*args, **kwargs):
                 start_time = time.time()
@@ -292,23 +297,25 @@ async def remove_invalid_book_source(data_path):
 
 
 @calculate_time(name="总任务")
-def main():
+async def main():
+    asyncio.get_running_loop().set_exception_handler(lambda loop, context: None)
+
     listdir = os.listdir(SOURCE_PATH)
     if 'all.json' in listdir:
         listdir.remove('all.json')
 
-    async_util.run(sync(listdir))
+    await sync(listdir)
 
     # 去除无效书源
-    async_util.run(remove_invalid_book_source(DATA_PATH))
+    await remove_invalid_book_source(DATA_PATH)
 
     # 合并书源
     all_in_one(DATA_PATH, STORAGE_PATH + '/all/all.json')
 
-    async_util.run(sync(['all.json'], True))
+    await sync(['all.json'], True)
 
     render(DATA_PATH)
 
 
 if __name__ == '__main__':
-    main()
+    async_util.run(main())

@@ -6,11 +6,11 @@
 # +-------------------------------------------------------------------
 import asyncio
 
-from aiohttp import ClientSession, ClientResponse, ClientTimeout
+from aiohttp import ClientResponse, ClientTimeout
 
 from common import config
 
-from aiohttp_retry import RetryClient
+from aiohttp_retry import RetryClient, ClientSession
 
 
 class Request:
@@ -50,7 +50,7 @@ def request(method, url, params=None, headers=None, data=None):
         method, config.http['http_proxy'] + url,
         params=params, proxy=config.http['proxy'],
         headers={**config.http['headers'], **headers},
-        data=data, verify_ssl=False,
+        data=data, ssl=False,
         timeout=ClientTimeout(total=config.http['timeout']))
 
 
@@ -62,3 +62,11 @@ def post(url, data=None, headers=None):
     return request("POST", url, data=data, headers={
         **config.http['headers'], **headers
     })
+
+
+if __name__ == '__main__':
+    async def test():
+        for i in range(1):
+            async with request("GET", "https://www.baidu.com") as r:
+                print(r.status)
+    asyncio.get_event_loop().run_until_complete(test())

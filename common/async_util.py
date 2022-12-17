@@ -49,11 +49,8 @@ async def gather(tasks):
 
 def run(func):
     loop = asyncio.get_event_loop()
-    if loop.is_closed():
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-
-    return loop.run_until_complete(func)
+    loop.run_until_complete(func)
+    loop.close()
 
 
 async def with_semaphore(semaphore, func):
