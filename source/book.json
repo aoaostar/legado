@@ -10,6 +10,13 @@
       ]
     },
     {
+      "title": "lifves书源",
+      "url": "https://lifves.com/api/v2/booksource/list",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
+    },
+    {
       "title": "namofree的书源",
       "url": "http://52bsj.vip:81/api/v3/file/get/13863/bookSource.json?sign=J2oDHYHAww44kFHrDK4YywuLV1RXSSJRtGkhILA_P7c%3D%3A0",
       "tag": []
