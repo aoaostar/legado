@@ -26,10 +26,16 @@ jobs:
           sudo apt-get install libxml2 libxml2-dev
           \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-      - name: Set up python
+      - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '8'
 
       - name: Install dependencies
         run: |
@@ -39,7 +45,10 @@ jobs:
       - name: Run script
         run: |
           python main.py
-          sudo echo "__pycache__" > .gitignore
+          sudo cat >.gitignore<<EOF
+          __pycache__
+          storage
+          EOF
 
       - name: Commit files
         run: |
