@@ -4,29 +4,78 @@
 # +-------------------------------------------------------------------
 # | Author: Pluto <i@aoaostar.com>
 # +-------------------------------------------------------------------
+import asyncio
+import base64
+import json
+import os
+import platform
 import urllib.parse
 
 import aiohttp
 
 from common import async_util
 
+KEYWORDS = ["我的", "系统", "老", "我", "的", "修", "在"]
+
 
 async def check_book(book_rule: dict):
-    return await check_book_by_search(book_rule)
+    return await check_book_by_cmd(book_rule)
+    # return await check_book_by_search(book_rule)
     # return await check_book_by_tcp_ping(book_rule)
+
+
+async def check_book_by_cmd(book_rule: dict):
+    for keyword in KEYWORDS:
+        try:
+            cmd = f'''java -jar ./legado-checker.jar -k "{keyword}"  -l 0 -i "{base64.b64encode(json.dumps(book_rule).encode()).decode()}"'''
+            proc = await asyncio.create_subprocess_shell(
+                cmd,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE)
+
+            stdout, stderr = await proc.communicate()
+            if platform.system() == "Windows":
+                stdout = stdout.decode("gbk")
+                stderr = stderr.decode("gbk")
+            else:
+                stdout = stdout.decode()
+                stderr = stderr.decode()
+
+            if proc.returncode == 0:
+                json_loads = json.loads(stdout)
+                message = ["校检通过"]
+                if len(json_loads) <= 0:
+                    continue
+                for k, v in json_loads.items():
+                    if v["status"] is False:
+                        if str(v['message']).__contains__('timed out'):
+                            continue
+                        if str(v['message']).__contains__('未获取到书籍'):
+                            continue
+                        if str(v['message']).__contains__('不支持webview'):
+                            return True, f"{v['message']}, 跳过"
+                        return False, f'发现异常, {k}: {v["message"]}'
+                    message.append(f'{k}: {v["message"]}')
+
+                return True, ", ".join(message)
+            else:
+                return False, stderr
+
+        except Exception as e:
+            return True, "校检失败, 跳过, " + e.__str__()
 
 
 async def check_book_by_search(book_rule: dict):
     from LegadoParser2.RuleCompile import compileBookSource
     from common.legado_parse.search import search
-    for keywords in ["我的", "系统", "老", "我", "的", "修", "在"]:
+    for keyword in KEYWORDS:
         try:
             compiledBookSource = compileBookSource(book_rule)
-            searchResult, skip = await search(compiledBookSource, keywords)
+            searchResult, skip = await search(compiledBookSource, keyword)
             if skip is not False:
                 return True, f"{skip}, 跳过"
             if len(searchResult) > 0:
-                return True, f"[{keywords}] 搜索结果数: {len(searchResult)}"
+                return True, f"[{keyword}] 搜索结果数: {len(searchResult)}"
             else:
                 continue
 
