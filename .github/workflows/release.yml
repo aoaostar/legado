@@ -16,9 +16,9 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
-          ref: release
+          fetch-depth: 0
 
       - name: Get dependencies
         run: |
@@ -39,6 +39,9 @@ jobs:
 
       - name: Install dependencies
         run: |
+          git fetch origin main:main
+          git checkout release
+          git checkout main ./
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
@@ -46,14 +49,24 @@ jobs:
         run: |
           python main.py
           sudo cat >.gitignore<<EOF
-          __pycache__
-          storage
+          *
+          !.github
+          !.github/**
+          !.gitlab
+          !.gitlab/**
+          !cache
+          !cache/**
+          !index.html
+          !README.md
+          !LISENCE
+          !.gitignore
           EOF
 
       - name: Commit files
         run: |
           sudo git config --local user.email "github-actions[bot]@users.noreply.github.com"
           sudo git config --local user.name "github-actions[bot]"
+          sudo git rm --cached --ignore-unmatch -r -f *
           sudo git add .
           sudo git commit -m "Add sync changes"
           sudo git checkout release

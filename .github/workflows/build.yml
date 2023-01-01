@@ -18,7 +18,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: main
 
@@ -48,14 +48,26 @@ jobs:
         run: |
           python main.py
           sudo cat >.gitignore<<EOF
-          __pycache__
-          storage
+          *
+          !.gitignore
+          !.github
+          !.github/**
+          !.gitlab
+          !.gitlab/**
+          !cache
+          !cache/**
+          !CNAME
+          !index.html
+          !README.md
+          !data.json
+          !LISENCE
           EOF
 
       - name: Commit files
         run: |
           sudo git config --local user.email "github-actions[bot]@users.noreply.github.com"
           sudo git config --local user.name "github-actions[bot]"
+          sudo git rm --cached --ignore-unmatch -r -f *
           sudo git add .
           sudo git commit -m "Add sync changes"
           sudo git checkout -B release
