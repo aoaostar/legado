@@ -15,7 +15,7 @@ import aiohttp
 
 from common import async_util
 
-KEYWORDS = ["我的", "系统", "老", "我", "的", "修", "在"]
+KEYWORDS = ["我的", "系统", "都市", "老", "我", "的", "都", "修", "在"]
 
 
 async def check_book(book_rule: dict):
@@ -27,7 +27,7 @@ async def check_book(book_rule: dict):
 async def check_book_by_cmd(book_rule: dict):
     for keyword in KEYWORDS:
         try:
-            cmd = f'''java -jar ./legado-checker.jar -k "{keyword}"  -l 0 -i "{base64.b64encode(json.dumps(book_rule).encode()).decode()}"'''
+            cmd = f'''java -jar ./legado-checker.jar -k "{keyword}"  -l 3 -i "{base64.b64encode(json.dumps(book_rule).encode()).decode()}"'''
             proc = await asyncio.create_subprocess_shell(
                 cmd,
                 stdout=asyncio.subprocess.PIPE,

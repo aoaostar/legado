@@ -10,11 +10,40 @@
       ]
     },
     {
-      "title": "lifves书源",
-      "url": "https://lifves.com/api/v2/booksource/list",
-      "tag": [
-        "\uD83D\uDD25"
-      ]
+      "title": "人间四月天合集书源",
+      "url": "人间四月天合集书源.json",
+      "type": "local",
+      "tag": []
+    },
+    {
+      "title": "水幽临渊合集书源",
+      "url": "水幽临渊合集书源.json",
+      "type": "local",
+      "tag": []
+    },
+    {
+      "title": "酷安@GGN0907.json",
+      "url": "酷安@GGN0907.json",
+      "type": "local",
+      "tag": []
+    },
+    {
+      "title": "酷安@无伤12138",
+      "url": "酷安@无伤12138.json",
+      "type": "local",
+      "tag": []
+    },
+    {
+      "title": "酷安@明堡宗猪骑朕",
+      "url": "酷安@明堡宗猪骑朕.json",
+      "type": "local",
+      "tag": []
+    },
+    {
+      "title": "陌生书源",
+      "url": "陌生书源.json",
+      "type": "local",
+      "tag": []
     },
     {
       "title": "namofree的书源",
@@ -33,7 +62,7 @@
     },
     {
       "title": "破冰书源",
-      "url": "https://raw.staticdn.net/PB-pobing/pobing/pb/50.json",
+      "url": "https://raw.githubusercontents.com/PB-pobing/pobing/pb/50.json",
       "tag": []
     },
     {
