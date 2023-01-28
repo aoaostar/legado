@@ -69,6 +69,9 @@ def load_modify_time_dict():
 
 
 def save_read_config(filename, data):
+    path_dirname = os.path.dirname(filename)
+    if not os.path.isdir(path_dirname):
+        os.makedirs(path_dirname, 755)
     import zipfile
     with zipfile.ZipFile(filename, "w") as f:
         f.writestr('readConfig.json', data)
@@ -99,7 +102,6 @@ async def process_source(item, key):
         if cache_sha1 in modify_time_dict:
             item['modify_time'] = modify_time_dict[cache_sha1]
             modify_time_dict.clear()
-    dumps = {}
     try:
         if 'type' in item and item['type'] == 'local':
             r_text_ = read_str(f"{url}")

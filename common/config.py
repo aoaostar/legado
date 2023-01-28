@@ -7,7 +7,7 @@
 
 retry = 3
 asyncio = {
-    "semaphore": 5,
+    "semaphore": 30,
     "sleep": 0,
 }
 
