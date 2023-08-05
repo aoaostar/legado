@@ -52,12 +52,12 @@
     },
     {
       "title": "一程的书源合集",
-      "url": "https://www.gitlink.org.cn/api/yi-c/yd/raw?filepath=sy.json",
+      "url": "https://www.gitlink.org.cn/api/yi-c/yd/raw/sy.json?ref=master",
       "tag": []
     },
     {
       "title": "风停在了窗边",
-      "url": "https://www.gitlink.org.cn/api/fcdlcb/ydsy/raw?filepath=bookSource.json",
+      "url": "https://www.gitlink.org.cn/api/fcdlcb/ydsy/raw/bookSource.json?ref=master",
       "tag": []
     },
     {
