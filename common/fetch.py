@@ -51,6 +51,7 @@ def request(method, url, params=None, headers=None, data=None):
         params=params, proxy=config.http['proxy'],
         headers={**config.http['headers'], **headers},
         data=data, ssl=False,
+        allow_redirects=True,
         timeout=ClientTimeout(total=config.http['timeout']))
 
 
@@ -69,4 +70,6 @@ if __name__ == '__main__':
         for i in range(1):
             async with request("GET", "https://www.baidu.com") as r:
                 print(r.status)
+
+
     asyncio.get_event_loop().run_until_complete(test())
