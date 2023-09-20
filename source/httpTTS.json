@@ -3,44 +3,42 @@
   "type": "httpTTS",
   "items": [
     {
-      "title": "月下自酌听书TTS合集",
+      "title": "酷安@三舞313听书TTS合集",
       "type": "local",
-      "url": "yxzz.json",
+      "url": "酷安@三舞313.json",
       "tag": [
         "\uD83D\uDD25"
       ]
+    },
+    {
+      "title": "月下自酌听书TTS合集",
+      "type": "local",
+      "url": "yxzz.json",
+      "tag": []
     },
     {
       "title": "暗香听书TTS合集",
       "type": "local",
       "url": "axts.json",
-      "tag": [
-        "\uD83D\uDD25"
-      ]
+      "tag": []
     },
     {
       "title": "千仞云听书TTS合集",
       "type": "local",
       "url": "qry.json",
-      "tag": [
-        "\uD83D\uDD25"
-      ]
+      "tag": []
     },
     {
       "title": "酷安@墨迹染流年分享的姬鲁听书TTS合集",
       "type": "local",
       "url": "mjrln.json",
-      "tag": [
-        "\uD83D\uDD25"
-      ]
+      "tag": []
     },
     {
       "title": "酷安@纵横不败大佬TTS听书源更新",
       "type": "local",
       "url": "yxzz.json",
-      "tag": [
-        "\uD83D\uDD25"
-      ]
+      "tag": []
     }
   ]
 }

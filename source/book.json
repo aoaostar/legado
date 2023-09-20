@@ -10,59 +10,43 @@
       ]
     },
     {
-      "title": "人间四月天合集书源",
-      "url": "人间四月天合集书源.json",
-      "type": "local",
-      "tag": []
+      "title": "一程的书源合集",
+      "url": "https://www.gitlink.org.cn/api/yi-c/yd/raw/sy.json?ref=master",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
     },
     {
-      "title": "水幽临渊合集书源",
-      "url": "水幽临渊合集书源.json",
-      "type": "local",
-      "tag": []
+      "title": "破冰书源",
+      "url": "https://github.com/PB-pobing/pobing/raw/pb/sy.json",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
     },
     {
-      "title": "酷安@GGN0907.json",
-      "url": "酷安@GGN0907.json",
+      "title": "酷安@三舞313书源",
       "type": "local",
-      "tag": []
+      "url": "酷安@三舞313.json",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
     },
     {
-      "title": "酷安@无伤12138",
-      "url": "酷安@无伤12138.json",
+      "title": "酷安@开源阅读软件",
       "type": "local",
-      "tag": []
-    },
-    {
-      "title": "酷安@明堡宗猪骑朕",
-      "url": "酷安@明堡宗猪骑朕.json",
-      "type": "local",
-      "tag": []
-    },
-    {
-      "title": "陌生书源",
-      "url": "陌生书源.json",
-      "type": "local",
-      "tag": []
+      "url": "酷安@开源阅读软件.json",
+      "tag": [
+        "\uD83D\uDD25"
+      ]
     },
     {
       "title": "namofree的书源",
-      "url": "http://52bsj.vip:81/api/v3/file/get/13863/bookSource.json?sign=J2oDHYHAww44kFHrDK4YywuLV1RXSSJRtGkhILA_P7c%3D%3A0",
-      "tag": []
-    },
-    {
-      "title": "一程的书源合集",
-      "url": "https://www.gitlink.org.cn/api/yi-c/yd/raw/sy.json?ref=master",
+      "url": "https://namofree.coding.net/p/yuedu/d/legado/git/raw/master/legadoNamo.json",
       "tag": []
     },
     {
       "title": "风停在了窗边",
       "url": "https://www.gitlink.org.cn/api/fcdlcb/ydsy/raw/bookSource.json?ref=master",
-      "tag": []
-    },
-    {
-      "title": "破冰书源",
-      "url": "https://raw.githubusercontents.com/PB-pobing/pobing/pb/50.json",
       "tag": []
     },
     {
@@ -78,6 +62,27 @@
     {
       "title": "不世玄奇搜索引擎书源",
       "url": "https://shuyuan.mgz6.cc/rss/ssyq.json",
+      "tag": []
+    },
+    {
+      "title": "FD源",
+      "url": "https://f-c.coding.net/p/fengchui/d/YDfc/git/raw/master/shareBookSource.json",
+      "tag": []
+    },
+    {
+      "title": "糖果超甜大佬的女频书源",
+      "url": "https://tangguochaotian.coding.net/p/tangguoshuyuan1015/d/tangguo/git/raw/master/exportBookSource.json",
+      "tag": []
+    },
+    {
+      "title": "关耳大佬的女频书源",
+      "url": "https://guaner001125.coding.net/p/coding-code-guide/d/booksources/git/raw/master/sources/guaner.json",
+      "tag": []
+    },
+    {
+      "title": "历史归档源",
+      "url": "历史归档源.json",
+      "type": "local",
       "tag": []
     }
   ]
