@@ -5,6 +5,7 @@
     {
       "title": "XIU2精品书源",
       "url": "https://github.com/XIU2/Yuedu/raw/master/shuyuan",
+      "website": "https://github.com/XIU2/Yuedu",
       "tag": [
         "\uD83D\uDD25"
       ]
@@ -12,6 +13,7 @@
     {
       "title": "一程的书源合集",
       "url": "https://www.gitlink.org.cn/api/yi-c/yd/raw/sy.json?ref=master",
+      "website": "https://www.gitlink.org.cn/yi-c/yd",
       "tag": [
         "\uD83D\uDD25"
       ]
@@ -19,6 +21,7 @@
     {
       "title": "破冰书源",
       "url": "https://github.com/PB-pobing/pobing/raw/pb/sy.json?ref=master",
+      "website": "https://github.com/PB-pobing/pobing",
       "tag": [
         "\uD83D\uDD25"
       ]
@@ -47,6 +50,7 @@
     {
       "title": "风停在了窗边",
       "url": "https://www.gitlink.org.cn/api/fcdlcb/ydsy/raw/bookSource.json?ref=master",
+      "website": "https://www.gitlink.org.cn/fcdlcb/ydsy",
       "tag": []
     },
     {
