@@ -209,8 +209,13 @@ def render(data_path: str):
                 if 'type' in v:
                     one_click = f'''
     + [一键导入](legado://import/{v['type']}?src={url})'''
+                website_link = ''
+                if 'website' in item:
+                    website_link = f'''
+    + [访问网站]({item['website']})'''
                 content += f'''
 * {title}
+    {website_link}
     + [访问直链]({url}){one_click}
     + 上一次同步状态: {item['status']}
     + 更新时间: {item['modify_time']}
