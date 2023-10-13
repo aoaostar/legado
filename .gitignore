@@ -1,5 +1,4 @@
 *
-!.gitignore
 !.github
 !.github/**
 !.gitlab
@@ -11,3 +10,4 @@
 !README.md
 !data.json
 !LISENCE
+!.gitignore
