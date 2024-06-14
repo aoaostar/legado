@@ -11,12 +11,11 @@ from typing import Any
 from common import config
 
 
-async def wait(tasks):
+async def wait(tasks, semaphore=config.asyncio['semaphore']):
     if len(tasks) <= 0:
         return
     arr: list[Task[Any]] = []
 
-    semaphore = config.asyncio['semaphore']
     if semaphore is not None:
         semaphore = asyncio.Semaphore(min(semaphore, len(tasks)))
 
@@ -30,10 +29,9 @@ async def wait(tasks):
     return await asyncio.wait(arr)
 
 
-async def gather(tasks):
+async def gather(tasks, semaphore=config.asyncio['semaphore']):
     arr = []
 
-    semaphore = config.asyncio['semaphore']
     if semaphore is not None:
         semaphore = asyncio.Semaphore(min(semaphore, len(tasks)))
 

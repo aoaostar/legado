@@ -8,6 +8,7 @@ import asyncio
 import json
 import os.path
 import time
+import warnings
 from typing import Callable, Union, Coroutine
 
 from common import fetch, hash_util, async_util
@@ -15,8 +16,6 @@ from common.check_book import check_book
 from common.date_format import date_format
 from common.file import save_str, read_str
 from common.json_util import load_json
-
-import warnings
 
 warnings.filterwarnings('ignore')
 
@@ -298,7 +297,7 @@ async def remove_invalid_book_source(data_path):
 
                 for rule in rules:
                     tasks.append(check(rule))
-                await async_util.wait(tasks)
+                await async_util.wait(tasks, 300)
                 log(f"{source['title']} {item['title']} 总书源: {len(rules)} 无效书源: {len(rules) - len(ok_rules)}")
                 save_str(item['filename'][:-len('.json')] + '_filter.json', json.dumps(ok_rules))
 
