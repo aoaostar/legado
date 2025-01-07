@@ -1,0 +1,26 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-case-conflict
+      - id: check-illegal-windows-names
+      - id: check-json
+      - id: check-xml
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+      - id: end-of-file-fixer
+      - id: check-ast
+#      - id: pretty-format-json
+#      - id: no-commit-to-branch
+#        args: [ --branch, main, --branch, master ]
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.7.4
+    hooks:
+      - id: ruff
+        args: [ --fix ]
+      - id: ruff-format
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.5.4
+    hooks:
+      - id: uv-export

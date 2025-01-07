@@ -10,6 +10,4 @@ Git仓库不支持一键导入，请前往 [legado.aoaostar.com](https://legado.
 
 > 阅读 APP [官方下载地址](https://github.com/gedoor/legado/releases)、[酷安下载地址[推荐]](https://www.coolapk.com/apk/256030)
 
-****
-
 Thanks for stopping by! 😁

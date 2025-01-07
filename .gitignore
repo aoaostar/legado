@@ -1,7 +1,8 @@
-cache
-data.json
-index.html
+!.gitignore
 .idea
-data/all/*.json
-__pycache__
-README2.md
+__pycache__/
+runtime
+*_tmp.*
+*_tmp
+sources
+index.html

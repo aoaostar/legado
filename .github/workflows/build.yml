@@ -1,68 +1,78 @@
 name: build
 
 on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
 
 jobs:
-
   build:
     strategy:
       matrix:
         platform: [ ubuntu-latest ]
-        python-version: [ 3.9 ]
     name: Build
     runs-on: ${{ matrix.platform }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: main
+          fetch-depth: 0
 
       - name: Get dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install libxml2 libxml2-dev
+          sudo apt-get update -y
           \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
         with:
-          python-version: ${{ matrix.python-version }}
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'corretto'
-          java-version: '8'
+      - name: Set up Python
+        run: uv python install
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          uv sync --default-index https://pypi.org/simple/
 
-      - name: Run script
+      - name: Restore cache lock
+        id: cache-lock-restore
         run: |
-          python main.py
-          sudo cat >.gitignore<<EOF
-          *
-          !.gitignore
-          !.github
-          !.github/**
-          !.gitlab
-          !.gitlab/**
-          !cache
-          !cache/**
-          !CNAME
-          !index.html
-          !README.md
-          !data.json
-          !LISENCE
-          EOF
+          if git show-ref --verify --quiet refs/remotes/origin/release; then
+            git restore --source=origin/release sources/cache.lock || true
+          fi
+          
+      - name: Restore cached sources
+        id: cache-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: runtime/sources
+          key: cache-sources-${{ hashFiles('**/cache.lock') }}
+          
+      - name: Sync sources
+        env:
+          PYTHONPATH: ${{ env.PYTHONPATH }}:${{ github.workspace }}/src
+        run: |
+          uv run src/main.py
+          date > sources/cache.lock
 
+      - name: Save cached sources
+        id: cache-save
+        uses: actions/cache/save@v4
+        with:
+          path: runtime/sources
+          key: cache-sources-${{ hashFiles('**/cache.lock') }}
+          
+      - name: Cleanup
+        env:
+          PYTHONPATH: ${{ env.PYTHONPATH }}:${{ github.workspace }}/src
+        run: |
+          uv run src/cleanup.py
+          
       - name: Commit files
         run: |
           sudo git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -70,5 +80,5 @@ jobs:
           sudo git rm --cached --ignore-unmatch -r -f *
           sudo git add .
           sudo git commit -m "Add sync changes"
-          sudo git checkout -B release
-          sudo git push -uf origin release
+          sudo git show-ref --verify --quiet refs/heads/release || sudo git checkout -b release
+          sudo git push -f origin release

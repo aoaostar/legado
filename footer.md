@@ -1,3 +1,0 @@
-****
-
-Thanks for stopping by! 😁

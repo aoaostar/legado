@@ -1,0 +1,31 @@
+- title: XIU2精品书源
+  url: https://github.com/XIU2/Yuedu/raw/master/shuyuan
+  home_page: https://github.com/XIU2/Yuedu
+  tags: [ 🔥 ]
+
+- title: 破冰书源
+  url: https://github.com/PB-pobing/pobing/raw/pb/sy.json?ref=master
+  home_page: https://github.com/PB-pobing/pobing
+  tags: [ 🔥 ]
+  
+- title: 关耳女频
+  url: https://legado.miaogongzi.org/%E9%98%85%E8%AF%BB%E4%B9%A6%E6%BA%90/guaner.json
+  home_page: https://yuedu.miaogongzi.net/gx.html
+  tags: [ 🔥 ]
+  
+- title: shidahuilang书源
+  url: https://github.com/shidahuilang/shuyuan/raw/refs/heads/shuyuan/good.json
+  home_page: https://github.com/shidahuilang/shuyuan
+  tags: [ 🔥 ]
+
+- title: 酷安@三舞313书源
+  url: book_sources/酷安@三舞313.json
+  tags: [ ]
+
+- title: 酷安@开源阅读软件
+  url: book_sources/酷安@开源阅读软件.json
+  tags: [ ]
+
+#- title: 历史归档源
+#  url: book_sources/历史归档源.json
+#  tags: [ ]
