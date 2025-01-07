@@ -13,6 +13,7 @@ file_patterns = [
     "!runtime",
     "index.html",
     "README.md",
+    "CNAME",
 ]
 
 spec = PathSpec.from_lines(patterns.GitWildMatchPattern, file_patterns)
