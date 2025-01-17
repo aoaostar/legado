@@ -82,3 +82,10 @@ jobs:
           sudo git commit -m "Add sync changes"
           sudo git show-ref --verify --quiet refs/heads/release || sudo git checkout -b release
           sudo git push -f origin release
+          
+      - name: Repo Mirror Sync
+        uses: kubeservice-stack/repos-mirror-action@v1.0.5
+        with:
+          target-url: https://gitea.com/aoaostar/legado.git
+          target-username: aoaostar
+          target-token: ${{ secrets.GITEA_ACCESS_TOKEN }}
