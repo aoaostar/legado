@@ -81,6 +81,26 @@ class RenderService:
         for k in self.render_sources_map:
             self.render_sources_data[k] = []
 
+    @staticmethod
+    def __translate_legado_url(source_result: SyncResult) -> tuple[str, str]:
+        src_url = f"{settings.repo_url}/sources/{source_result.output_path.relative_to(TEMP_SOURCES_PATH)}"
+
+        match source_result.source:
+            case HttpTTSSource():
+                legado_url = f"legado://import/httpTTS?src={src_url}"
+            case ReadConfig():
+                legado_url = f"legado://import/readConfig?src={src_url}"
+            case ReplaceRule():
+                legado_url = f"legado://import/replaceRule?src={src_url}"
+            case Subscribe():
+                legado_url = f"legado://import/rssSource?src={src_url}"
+            case Theme():
+                legado_url = f"legado://import/theme?src={src_url}"
+            case _:
+                legado_url = f"legado://import/bookSource?src={src_url}"
+
+        return src_url, legado_url
+
     async def execute(self, sources: list[SyncResult]):
         for s in sources:
             self.render_sources_data[s.source.__class__].append(s)
@@ -101,7 +121,7 @@ class RenderService:
             sub_contents = []
 
             for i, s in enumerate(ss):
-                src_url = f"{settings.repo_url}/sources/{s.output_path.relative_to(TEMP_SOURCES_PATH)}"
+                src_url, legado_url = self.__translate_legado_url(s)
                 sync_status = (
                     "同步成功"
                     if s.status == SyncStatus.Success
@@ -112,7 +132,7 @@ class RenderService:
 * {s.source.title} {"、".join(s.source.tags)}
 
     + [访问直链]({src_url})
-    + [一键导入](legado://import/bookSource?src={src_url})
+    + [一键导入]({legado_url})
     + 上一次同步状态: {sync_status}, 共 {s.count} 条
     + 更新时间: {s.update_time}
     + 同步时间: {s.sync_time}

@@ -3,7 +3,7 @@ import contextlib
 import logging
 import shutil
 
-from common.constant import SOURCES_PATH, TEMP_SOURCES_PATH
+from common.constant import SOURCES_PATH
 from common.logger import setup_logging
 from services.render_service import RenderService
 from services.sync_service import SyncService
@@ -23,14 +23,16 @@ class Main:
         logging.info("开始渲染数据")
         await render_service.execute(sync_result)
         logging.info("渲染数据完成")
-        shutil.copytree(
-            TEMP_SOURCES_PATH,
-            SOURCES_PATH,
-            dirs_exist_ok=True,
-            ignore=shutil.ignore_patterns(
-                "*.temp",
-            ),
-        )
+
+        logging.info("同步数据到源目录")
+        shutil.rmtree(SOURCES_PATH, ignore_errors=True)
+        SOURCES_PATH.mkdir(parents=True, exist_ok=True)
+        for result in sync_result:
+            shutil.copy(
+                result.output_path,
+                SOURCES_PATH / result.output_path.name,
+            )
+
         logging.info("同步数据到源目录完成")
 
     @classmethod

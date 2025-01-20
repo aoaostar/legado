@@ -2,13 +2,15 @@ import asyncio
 import contextlib
 import json
 import logging
+import zipfile
 from datetime import datetime
+from pathlib import Path
 
 import settings
 from common.constant import STORAGE_PATH, TEMP_SOURCES_PATH
 from conf import sources
 from conf.models.BaseSouce import BaseSource
-from conf.models.Souces import BookSource
+from conf.models.Souces import BookSource, ReadConfig
 from models.sync import SyncResult, SyncStatus
 from utils import hash_utils
 from utils.http_request import http_request
@@ -29,7 +31,7 @@ class SyncService:
         ]
         self.__results: dict[int, SyncResult] = {}
 
-    async def execute(self):
+    async def execute(self) -> list[SyncResult]:
         ts = []
         for _ in range(max(1, self.__queue.maxsize)):
             ts.append(asyncio.create_task(self.worker()))
@@ -106,11 +108,41 @@ class SyncService:
             case _:
                 return origin_data
 
+    def __translate_file_path(
+        self,
+        source: BaseSource,
+    ):
+        file_path = TEMP_SOURCES_PATH / f"{hash_utils.sha1(source.url)[:8]}.json"
+        match source:
+            case ReadConfig():
+                return file_path.with_suffix(".zip")
+            case _:
+                return file_path
+
+    async def __save(
+        self,
+        file_path: Path,
+        source: BaseSource,
+        serialized_data: str,
+    ):
+        match source:
+            case ReadConfig():
+                with zipfile.ZipFile(
+                    file_path,
+                    "w",
+                    zipfile.ZIP_DEFLATED,
+                ) as f:
+                    f.writestr("readConfig.json", serialized_data)
+            case _:
+                file_path.write_text(
+                    serialized_data,
+                    encoding="utf-8",
+                )
+
     async def sync(self, source: BaseSource) -> SyncResult:
         logging.info(f"[{source.title}] 开始同步 {source.url}")
 
-        hash_name = hash_utils.sha1(source.url)[:8]
-        file_path = TEMP_SOURCES_PATH / f"{hash_name}.json"
+        file_path = self.__translate_file_path(source)
 
         result = SyncResult(
             source=source,
@@ -144,10 +176,7 @@ class SyncService:
                     changed = False
 
             if changed:
-                file_path.write_text(
-                    serialized_data,
-                    encoding="utf-8",
-                )
+                await self.__save(file_path, source, serialized_data)
                 result.update_time = datetime.now()
             else:
                 logging.info(f"[{source.title}]数据未发生变化")
@@ -163,7 +192,11 @@ class SyncService:
             result.status = SyncStatus.Failed
             result.message = str(e)
 
-            if file_path.exists():
-                result.count = len(json.loads(file_path.read_text(encoding="utf-8")))
+            try:
+                if str(file_path).endswith(".json"):
+                    json_data = json.loads(file_path.read_text(encoding="utf-8"))
+                    result.count = len(json_data) if isinstance(json_data, list) else 1
+            except (json.JSONDecodeError, FileNotFoundError):
+                pass
 
         return result
