@@ -5,7 +5,6 @@ import shutil
 
 from common.constant import SOURCES_PATH
 from common.logger import setup_logging
-from services.file_state_service import FileStateService
 from services.render_service import RenderService
 from services.sync_service import SyncService
 
@@ -16,17 +15,12 @@ class Main:
 
     async def execute(self):
         (
-            ffs,
             sync_service,
             render_service,
         ) = (
-            FileStateService(),
             SyncService(),
             RenderService(),
         )
-        # logging.info("开始恢复文件状态")
-        # await ffs.restore()
-        # logging.info("恢复文件状态完成")
 
         logging.info("开始同步数据")
         sync_result = await sync_service.execute()
@@ -34,10 +28,6 @@ class Main:
         logging.info("开始渲染数据")
         await render_service.execute(sync_result)
         logging.info("渲染数据完成")
-
-        logging.info("保存文件状态")
-        await ffs.save()
-        logging.info("保存文件状态完成")
 
         logging.info("同步数据到源目录")
         shutil.rmtree(SOURCES_PATH, ignore_errors=True)
