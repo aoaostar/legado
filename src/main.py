@@ -35,6 +35,10 @@ class Main:
         await render_service.execute(sync_result)
         logging.info("渲染数据完成")
 
+        logging.info("保存文件状态")
+        await ffs.save()
+        logging.info("保存文件状态完成")
+
         logging.info("同步数据到源目录")
         shutil.rmtree(SOURCES_PATH, ignore_errors=True)
         SOURCES_PATH.mkdir(parents=True, exist_ok=True)
