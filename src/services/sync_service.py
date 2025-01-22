@@ -2,6 +2,7 @@ import asyncio
 import contextlib
 import json
 import logging
+import time
 import zipfile
 from datetime import datetime
 from pathlib import Path
@@ -140,6 +141,7 @@ class SyncService:
                 )
 
     async def sync(self, source: BaseSource) -> SyncResult:
+        sw = time.perf_counter()
         logging.info(f"[{source.title}] 开始同步 {source.url}")
 
         file_path = self.__translate_file_path(source)
@@ -188,9 +190,9 @@ class SyncService:
 
             logging.info(f"[{source.title}]同步完成: 共计 {result.count} 条")
         except Exception as e:
-            logging.error(f"[{source.title}]同步失败")
             result.status = SyncStatus.Failed
             result.message = str(e)
+            logging.error(f"[{source.title}]同步失败, {result.message}")
 
             try:
                 if str(file_path).endswith(".json"):
@@ -198,5 +200,7 @@ class SyncService:
                     result.count = len(json_data) if isinstance(json_data, list) else 1
             except (json.JSONDecodeError, FileNotFoundError):
                 pass
+        finally:
+            logging.info(f"[{source.title}]同步耗时: {time.perf_counter() - sw:.2f}s")
 
         return result

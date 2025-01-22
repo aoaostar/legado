@@ -13,14 +13,12 @@ def short_hash_name(str_content: str, length: int = 8):
     return sha1(str_content)[:length]
 
 
-def file_sha1(filepath: str | Path):
+def file_sha1(filepath: str | Path) -> str:
     s = hashlib.sha1()
     filepath = Path(filepath)
     with filepath.open("rb") as f:
-        while True:
-            b = f.read(2048)
-            if not b:
-                break
+        while chunk := f.read(1024):
             # noinspection PyTypeChecker
-            s.update(b)
+            s.update(chunk)
+
     return s.hexdigest()

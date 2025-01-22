@@ -133,11 +133,13 @@ class RenderService:
 
     + [访问直链]({src_url})
     + [一键导入]({legado_url})
+    + [访问网站]{f"({s.source.home_page})" if s.source.home_page else "暂无"}
     + 上一次同步状态: {sync_status}, 共 {s.count} 条
     + 更新时间: {s.update_time}
     + 同步时间: {s.sync_time}
-""".strip(),
+""".strip()
                 )
+
                 if i < len(ss) - 1:
                     sub_contents.append("****")
 

@@ -5,6 +5,7 @@ import shutil
 
 from common.constant import SOURCES_PATH
 from common.logger import setup_logging
+from services.file_state_service import FileStateService
 from services.render_service import RenderService
 from services.sync_service import SyncService
 
@@ -14,8 +15,18 @@ class Main:
         setup_logging(self.__class__.__name__)
 
     async def execute(self):
-        sync_service = SyncService()
-        render_service = RenderService()
+        (
+            ffs,
+            sync_service,
+            render_service,
+        ) = (
+            FileStateService(),
+            SyncService(),
+            RenderService(),
+        )
+        logging.info("开始恢复文件状态")
+        await ffs.restore()
+        logging.info("恢复文件状态完成")
 
         logging.info("开始同步数据")
         sync_result = await sync_service.execute()
