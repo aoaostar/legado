@@ -182,7 +182,7 @@ class SyncService:
                 result.update_time = datetime.now()
             else:
                 logging.info(f"[{source.title}]数据未发生变化")
-                result.update_time = datetime.fromtimestamp(file_path.stat().st_ctime)
+                result.update_time = datetime.fromtimestamp(file_path.stat().st_mtime)
 
             result.output_path = file_path
             result.status = SyncStatus.Success

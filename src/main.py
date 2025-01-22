@@ -24,9 +24,9 @@ class Main:
             SyncService(),
             RenderService(),
         )
-        logging.info("开始恢复文件状态")
-        await ffs.restore()
-        logging.info("恢复文件状态完成")
+        # logging.info("开始恢复文件状态")
+        # await ffs.restore()
+        # logging.info("恢复文件状态完成")
 
         logging.info("开始同步数据")
         sync_result = await sync_service.execute()
