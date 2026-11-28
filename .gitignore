@@ -1,8 +1,0 @@
-!.gitignore
-.idea
-__pycache__/
-runtime
-*_tmp.*
-*_tmp
-sources
-index.html
